@@ -1,64 +1,68 @@
-# WristMind
+# Orbi
 
-Assistente de IA por voz para relógios Wear OS. Tocas no ecrã do relógio, falas, e a resposta aparece e é lida em voz alta. A configuração é toda feita numa app no telemóvel Android.
+A voice AI assistant for Wear OS watches. Tap the watch, talk, and the answer shows up on screen and is read aloud. All setup happens in a companion app on your Android phone.
 
-*Voice AI assistant for Wear OS watches, set up from an Android phone. Works with Claude, Gemini or ChatGPT using your own API key.*
+Works with Claude, Gemini or ChatGPT using your own API key. The apps are in English and switch to Portuguese automatically when the device language is Portuguese.
 
-![Ecrãs do relógio](docs/relogio.svg)
+![Watch screens](docs/relogio.svg)
 
-![App do telemóvel](docs/telemovel.svg)
+![Phone app](docs/telemovel.svg)
 
-As imagens são ilustrações do layout, não capturas de ecrã reais.
+The images are layout illustrations, not real screenshots.
 
-## O que faz
+## Features
 
-* Conversa por voz com contexto, com respostas curtas pensadas para o pulso.
-* Tradução falada: dizes a frase e o relógio diz a tradução no idioma escolhido.
-* Três serviços à escolha: Claude (Anthropic), Gemini (Google) e ChatGPT (OpenAI).
-* Nome do assistente à tua escolha.
-* Skins: cor dos anéis e cor do fundo do relógio.
-* Cada pessoa usa a sua própria chave. As chaves ficam só no telemóvel e no relógio.
+* Voice chat that keeps context, with short answers made for the wrist.
+* Spoken translation: say a sentence and the watch speaks it in the language you picked.
+* Three services to choose from: Claude (Anthropic), Gemini (Google) and ChatGPT (OpenAI).
+* Name the assistant whatever you like.
+* Skins: pick the ring colour and the watch background colour.
+* Everyone uses their own key. Keys stay on the phone and the watch only.
 
-## Instalar
+## Install
 
-Os dois ficheiros estão em [Releases](https://github.com/helteixeira/wristmind/releases/latest).
+Both files are in [Releases](https://github.com/helteixeira/orbi/releases/latest).
 
-1. No telemóvel descarrega e instala `WristMindTelemovel.apk`. O Android pede autorização para instalar de fontes desconhecidas.
-2. Abre o WristMind, escolhe o serviço de IA, toca em **Obter chave**, cola a chave e toca em **Testar**.
-3. Instala `WristMindRelogio.apk` no relógio (ver em baixo).
-4. No telemóvel toca em **Guardar e enviar para o relógio**.
+1. On the phone, download and install `OrbiPhone.apk`. Android will ask you to allow installs from unknown sources.
+2. Open Orbi, pick an AI service, tap **Get a key**, paste the key and tap **Test**.
+3. Install `OrbiWatch.apk` on the watch (see below).
+4. On the phone tap **Save and send to watch**.
 
-### Instalar no relógio
+### Installing on the watch
 
-O Android não permite que uma app do telemóvel instale outra app no relógio em silêncio. Enquanto o WristMind não estiver na Play Store, a instalação é feita por depuração sem fios:
+Android does not let a phone app silently install another app on a watch. Until Orbi is on the Play Store, the watch app is installed over wireless debugging:
 
-1. No relógio abre Definições, Acerca do relógio, e toca 7 vezes no número de compilação.
-2. Em Opções de programador liga Depuração ADB e Depuração sem fios.
-3. Envia o APK com uma app de instalação para Wear OS a partir do telemóvel, ou a partir de um computador com `adb pair`, `adb connect` e `adb install WristMindRelogio.apk`.
+1. On the watch open Settings, About watch, and tap the build number 7 times.
+2. In Developer options turn on ADB debugging and Wireless debugging.
+3. Send the APK with a Wear OS installer app from the phone, or from a computer with `adb pair`, `adb connect` and `adb install OrbiWatch.apk`.
 
-O telemóvel e o relógio têm de ter as duas apps da mesma versão, porque partilham a mesma assinatura.
+The phone and watch apps must come from the same release, because they share a signature.
 
-## Usar
+## Using it
 
-* Toque no ecrã: falar. Toque durante a resposta: interromper e falar outra vez.
-* Toque longo: alternar entre Conversa e Tradução.
-* Por voz: Ok Google, abre o WristMind.
-* Por botão: nas definições do relógio atribui o WristMind a um toque duplo num botão.
+* Tap the screen to talk. Tap during an answer to interrupt and talk again.
+* Long press to switch between Chat and Translation.
+* By voice: Ok Google, open Orbi.
+* By button: in the watch settings assign Orbi to a double press.
 
-## Chaves
+## Keys
 
-| Serviço | Onde criar a chave |
+| Service | Where to create the key |
 | --- | --- |
 | Claude | console.anthropic.com |
-| Gemini | aistudio.google.com, com a tua conta Google |
+| Gemini | aistudio.google.com, with your Google account |
 | ChatGPT | platform.openai.com |
 
-As subscrições das apps Claude e ChatGPT não dão acesso a apps de terceiros, por isso é sempre precisa uma chave de API. O custo de utilização é cobrado pelo serviço escolhido na conta de cada pessoa.
+Claude and ChatGPT app subscriptions do not give access to third party apps, so an API key is always needed. Usage is billed by the service you pick, on your own account.
 
-## Estado do projeto
+## Status
 
-Projeto pessoal e experimental, testado em poucos aparelhos. Requer Wear OS 3 ou superior e Android 8 ou superior. Ainda não tem palavra de ativação sempre à escuta nem gravação e resumo de reuniões.
+A personal, experimental project tested on very few devices. Needs Wear OS 3 or later and Android 8 or later. There is no always listening wake word yet, and no meeting recording or summaries.
 
-## Compilar
+## Building
 
-Cada alteração no ramo `main` compila as duas apps com GitHub Actions e publica os APKs em Releases. Para compilar no computador abre a pasta no Android Studio.
+Every change on `main` builds both apps with GitHub Actions and publishes the APKs to Releases. To build locally, open the folder in Android Studio.
+
+## Em português
+
+O Orbi é um assistente de IA por voz para relógios Wear OS, configurado a partir de uma app no telemóvel Android. Funciona com Claude, Gemini ou ChatGPT com a tua própria chave. As apps aparecem em português quando o aparelho está em português. Os ficheiros de instalação estão em [Releases](https://github.com/helteixeira/orbi/releases/latest).

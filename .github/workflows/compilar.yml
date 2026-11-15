@@ -1,4 +1,4 @@
-name: Compilar APKs
+name: Build APKs
 
 on:
   push:
@@ -11,8 +11,12 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: build
+  cancel-in-progress: true
+
 jobs:
-  compilar:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,35 +30,40 @@ jobs:
         with:
           gradle-version: "8.9"
 
-      - name: Chave de assinatura
+      - name: Signing key
         env:
           KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
         run: |
           if [ -n "$KEYSTORE_B64" ]; then
-            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/wristmind.keystore"
-            echo "KEYSTORE_FILE=$RUNNER_TEMP/wristmind.keystore" >> "$GITHUB_ENV"
-            echo "Assinatura: chave privada do projeto"
+            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/orbi.keystore"
+            echo "KEYSTORE_FILE=$RUNNER_TEMP/orbi.keystore" >> "$GITHUB_ENV"
+            echo "Signing with the project key"
           else
-            echo "Assinatura: chave de testes desta compilacao"
+            echo "Signing with this build's test key"
           fi
 
-      - name: Compilar telemovel e relogio
+      - name: Build phone and watch apps
         run: gradle :mobile:assembleRelease :wear:assembleRelease --no-daemon
 
-      - name: Preparar ficheiros
+      - name: Collect files
         run: |
           mkdir -p saida
-          cp mobile/build/outputs/apk/release/*.apk saida/WristMindTelemovel.apk
-          cp wear/build/outputs/apk/release/*.apk saida/WristMindRelogio.apk
+          cp mobile/build/outputs/apk/release/*.apk saida/OrbiPhone.apk
+          cp wear/build/outputs/apk/release/*.apk saida/OrbiWatch.apk
 
       - uses: actions/upload-artifact@v4
         with:
-          name: WristMindAPKs
+          name: OrbiAPKs
           path: saida/*.apk
+
+      - name: Remove previous release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release delete latest --cleanup-tag --yes --repo "$GITHUB_REPOSITORY" || true
 
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
-          name: WristMind ultima versao
+          name: Orbi latest build
           files: saida/*.apk
           make_latest: true

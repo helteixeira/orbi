@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.wristmind.core.Skin
+import app.wristmind.core.tr
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import kotlin.math.abs
@@ -219,8 +220,8 @@ fun PreVisualizacao(nome: String, cor: Color, fundo: Color) {
             }
         }
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(top = 70.dp)) {
-            Text(nome.ifBlank { "Nova" }, color = Color(0xFFE6F1FB), fontSize = 16.sp, fontWeight = FontWeight.Medium)
-            Text("Toca para falar", color = cor, fontSize = 12.sp, textAlign = TextAlign.Center)
+            Text(nome.ifBlank { "Orbi" }, color = Color(0xFFE6F1FB), fontSize = 16.sp, fontWeight = FontWeight.Medium)
+            Text(tr("Tap to talk", "Toca para falar"), color = cor, fontSize = 12.sp, textAlign = TextAlign.Center)
         }
     }
 }

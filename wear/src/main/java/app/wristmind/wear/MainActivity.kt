@@ -156,7 +156,7 @@ class MainActivity : ComponentActivity() {
     private fun textos(): Pair<String, String> = when (val e = estado) {
         Estado.Pronto -> config.nome to
             if (modo == Modo.TRADUCAO) {
-                getString(R.string.estado_pronto_traducao, Idiomas.nomeEmPortugues(config.idiomaTraducao))
+                getString(R.string.estado_pronto_traducao, Idiomas.nome(config.idiomaTraducao))
             } else {
                 getString(R.string.estado_pronto)
             }

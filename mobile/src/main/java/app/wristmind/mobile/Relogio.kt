@@ -8,9 +8,9 @@ import com.google.android.gms.wearable.Wearable
 import kotlinx.coroutines.tasks.await
 
 const val CAMINHO_CONFIG = "/wristmind/config"
-const val URL_PROJETO = "https://github.com/helteixeira/wristmind"
-const val URL_VERSOES = "https://github.com/helteixeira/wristmind/releases/latest"
-const val URL_APK_RELOGIO = "https://github.com/helteixeira/wristmind/releases/latest/download/WristMindRelogio.apk"
+const val URL_PROJETO = "https://github.com/helteixeira/orbi"
+const val URL_VERSOES = "https://github.com/helteixeira/orbi/releases/latest"
+const val URL_APK_RELOGIO = "https://github.com/helteixeira/orbi/releases/latest/download/OrbiWatch.apk"
 
 /** Nomes dos relógios ligados a este telemóvel. */
 suspend fun relogiosLigados(ctx: Context): List<String> =

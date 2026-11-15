@@ -18,21 +18,21 @@ object Fornecedores {
         nome = "Claude",
         urlChave = "https://console.anthropic.com/settings/keys",
         modeloPadrao = "claude-haiku-5-5",
-        nota = "Chave paga pela conta da API da Anthropic. A subscrição da app Claude não serve.",
+        nota = tr("Paid key from your Anthropic API account. A Claude app subscription does not work here.", "Chave paga pela conta da API da Anthropic. A subscrição da app Claude não serve."),
     )
     val GEMINI = Fornecedor(
         id = "gemini",
         nome = "Gemini",
         urlChave = "https://aistudio.google.com/apikey",
         modeloPadrao = "gemini-3.8-flash",
-        nota = "Entras com a tua conta Google no AI Studio e crias a chave em segundos.",
+        nota = tr("Sign in to AI Studio with your Google account and create a key in seconds.", "Entras com a tua conta Google no AI Studio e crias a chave em segundos."),
     )
     val OPENAI = Fornecedor(
         id = "openai",
         nome = "ChatGPT",
         urlChave = "https://platform.openai.com/api-keys",
         modeloPadrao = "chat-latest",
-        nota = "Chave paga pela conta da API da OpenAI. A subscrição do ChatGPT não serve.",
+        nota = tr("Paid key from your OpenAI API account. A ChatGPT subscription does not work here.", "Chave paga pela conta da API da OpenAI. A subscrição do ChatGPT não serve."),
     )
 
     val todos = listOf(ANTHROPIC, GEMINI, OPENAI)
@@ -64,23 +64,28 @@ object Skins {
     fun fundo(id: String): Long = (fundos.firstOrNull { it.id == id } ?: fundos.first()).argb
 }
 
-data class Idioma(val codigo: String, val nomeNativo: String, val nomeEmPortugues: String)
+data class Idioma(val codigo: String, val nomeNativo: String, val nomeEn: String, val nomePt: String)
 
 object Idiomas {
     val todos = listOf(
-        Idioma("pt-PT", "Português (Portugal)", "português europeu"),
-        Idioma("en-US", "English", "inglês"),
-        Idioma("es-ES", "Español", "espanhol"),
-        Idioma("de-DE", "Deutsch", "alemão"),
-        Idioma("fr-FR", "Français", "francês"),
+        Idioma("pt-PT", "Português (Portugal)", "European Portuguese", "português europeu"),
+        Idioma("en-US", "English", "English", "inglês"),
+        Idioma("es-ES", "Español", "Spanish", "espanhol"),
+        Idioma("de-DE", "Deutsch", "German", "alemão"),
+        Idioma("fr-FR", "Français", "French", "francês"),
     )
 
-    fun nomeEmPortugues(codigo: String): String =
-        todos.firstOrNull { it.codigo == codigo }?.nomeEmPortugues ?: "português europeu"
+    private fun procurar(codigo: String): Idioma = todos.firstOrNull { it.codigo == codigo } ?: todos[1]
+
+    /** Language name in English, used in the instructions sent to the model. */
+    fun nomeEmIngles(codigo: String): String = procurar(codigo).nomeEn
+
+    /** Language name shown to the user, in the device language. */
+    fun nome(codigo: String): String = procurar(codigo).let { tr(it.nomeEn, it.nomePt) }
 }
 
 data class AppConfig(
-    val nome: String = "Nova",
+    val nome: String = "Orbi",
     val utilizador: String = "",
     val fornecedor: String = Fornecedores.ANTHROPIC.id,
     val chaveAnthropic: String = "",
@@ -89,8 +94,8 @@ data class AppConfig(
     val modeloAnthropic: String = Fornecedores.ANTHROPIC.modeloPadrao,
     val modeloGemini: String = Fornecedores.GEMINI.modeloPadrao,
     val modeloOpenAi: String = Fornecedores.OPENAI.modeloPadrao,
-    val idioma: String = "pt-PT",
-    val idiomaTraducao: String = "en-US",
+    val idioma: String = if (devicePrefersPortuguese()) "pt-PT" else "en-US",
+    val idiomaTraducao: String = if (devicePrefersPortuguese()) "en-US" else "es-ES",
     val voz: Boolean = true,
     val ouvirAoAbrir: Boolean = true,
     val skin: String = "azul",

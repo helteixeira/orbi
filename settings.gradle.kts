@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "WristMind"
+rootProject.name = "Orbi"
 include(":core", ":mobile", ":wear")

@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WristMind</string>
-
-    <string name="estado_pronto">Toca para falar</string>
-    <string name="estado_pronto_traducao">Traduzir para %1$s. Toca para falar</string>
-    <string name="estado_ouvir">A ouvir</string>
-    <string name="estado_pensar">A pensar</string>
-    <string name="dica_ouvir">Diz o que precisas</string>
-
-    <string name="erro_sem_chave">Abre a app no telemóvel e faz o setup.</string>
-    <string name="erro_sem_voz">Este relógio não tem reconhecimento de voz.</string>
-    <string name="erro_generico">Não consegui responder.</string>
-
-    <string name="prompt_voz">Fala com %1$s</string>
+    <string name="app_name">Orbi</string>
+    <string name="estado_pronto">Tap to talk</string>
+    <string name="estado_pronto_traducao">Translate to %1$s. Tap to talk</string>
+    <string name="estado_ouvir">Listening</string>
+    <string name="estado_pensar">Thinking</string>
+    <string name="dica_ouvir">Say what you need</string>
+    <string name="erro_sem_chave">Open the app on your phone and finish the setup.</string>
+    <string name="erro_sem_voz">This watch has no speech recognition.</string>
+    <string name="erro_generico">Could not answer.</string>
+    <string name="prompt_voz">Talk to %1$s</string>
 </resources>

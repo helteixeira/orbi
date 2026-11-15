@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="estado_pronto">Toca para falar</string>
+    <string name="estado_pronto_traducao">Traduzir para %1$s. Toca para falar</string>
+    <string name="estado_ouvir">A ouvir</string>
+    <string name="estado_pensar">A pensar</string>
+    <string name="dica_ouvir">Diz o que precisas</string>
+    <string name="erro_sem_chave">Abre a app no telemóvel e faz o setup.</string>
+    <string name="erro_sem_voz">Este relógio não tem reconhecimento de voz.</string>
+    <string name="erro_generico">Não consegui responder.</string>
+    <string name="prompt_voz">Fala com %1$s</string>
+</resources>

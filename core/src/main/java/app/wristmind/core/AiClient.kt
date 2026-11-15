@@ -82,13 +82,13 @@ class AiClient(private val config: () -> AppConfig) {
             Fornecedores.OPENAI.id -> openAi(chave, modelo, sistema, mensagens, maxTokens)
             else -> anthropic(chave, modelo, sistema, mensagens, maxTokens)
         }.trim()
-        if (texto.isEmpty()) throw IOException("Resposta vazia. Experimenta outro modelo.")
+        if (texto.isEmpty()) throw IOException(tr("Empty answer. Try another model.", "Resposta vazia. Experimenta outro modelo."))
         return texto
     }
 
     private fun exigirChave(c: AppConfig) {
         if (c.chaveAtiva().isBlank()) {
-            throw IOException("Falta a chave do ${Fornecedores.porId(c.fornecedor).nome}. Faz o setup no telemóvel.")
+            throw IOException(tr("Missing key for ", "Falta a chave do ") + Fornecedores.porId(c.fornecedor).nome + tr(". Finish the setup on the phone.", ". Faz o setup no telemóvel."))
         }
     }
 
@@ -189,13 +189,13 @@ class AiClient(private val config: () -> AppConfig) {
             JSONObject(corpo).getJSONObject("error").getString("message")
         }.getOrDefault("").take(140)
         val base = when (codigo) {
-            400 -> "Pedido recusado. Confirma a chave e o modelo."
-            401 -> "A chave não é válida."
-            403 -> "A chave não tem permissão para este pedido."
-            404 -> "Modelo não encontrado. Escolhe outro no telemóvel."
-            429 -> "Demasiados pedidos ou sem saldo na conta."
-            in 500..599 -> "O serviço está com problemas. Tenta daqui a pouco."
-            else -> "Erro $codigo."
+            400 -> tr("Request rejected. Check the key and the model.", "Pedido recusado. Confirma a chave e o modelo.")
+            401 -> tr("The key is not valid.", "A chave não é válida.")
+            403 -> tr("The key is not allowed to make this request.", "A chave não tem permissão para este pedido.")
+            404 -> tr("Model not found. Pick another one on the phone.", "Modelo não encontrado. Escolhe outro no telemóvel.")
+            429 -> tr("Too many requests or no credit on the account.", "Demasiados pedidos ou sem saldo na conta.")
+            in 500..599 -> tr("The service is having problems. Try again shortly.", "O serviço está com problemas. Tenta daqui a pouco.")
+            else -> tr("Error ", "Erro ") + codigo + "."
         }
         return if (detalhe.isBlank()) base else "$base $detalhe"
     }
@@ -210,23 +210,23 @@ class AiClient(private val config: () -> AppConfig) {
 object Prompts {
 
     fun conversa(c: AppConfig): String = buildString {
-        append("O teu nome é ")
+        append("Your name is ")
         append(c.nome)
-        append(". És o assistente pessoal")
+        append(". You are the personal assistant")
         if (c.utilizador.isNotBlank()) {
-            append(" de ")
+            append(" of ")
             append(c.utilizador)
         }
-        append(", que fala contigo por voz através de um smartwatch. ")
-        append("Responde sempre em ")
-        append(Idiomas.nomeEmPortugues(c.idioma))
-        append(", com um tom natural, próximo e eficiente. ")
-        append("As respostas são lidas em voz alta num ecrã pequeno, por isso usa uma a três frases curtas. ")
-        append("Não uses markdown, listas, símbolos, emojis nem travessões. ")
-        append("Se a pergunta precisar de uma resposta longa, dá o essencial e oferece ajuda para continuar.")
+        append(", who talks to you by voice through a smartwatch. ")
+        append("Always answer in ")
+        append(Idiomas.nomeEmIngles(c.idioma))
+        append(", in a natural, warm and efficient tone. ")
+        append("Answers are read aloud on a small screen, so use one to three short sentences. ")
+        append("Do not use markdown, lists, symbols, emojis or dashes. ")
+        append("If the question needs a long answer, give the essentials and offer to continue.")
     }
 
     fun traducao(c: AppConfig): String =
-        "És um tradutor. Traduz o texto do utilizador para " + Idiomas.nomeEmPortugues(c.idiomaTraducao) +
-            ". O texto pode estar em qualquer idioma. Devolve só a tradução, sem aspas, sem notas e sem comentários."
+        "You are a translator. Translate the user's text into " + Idiomas.nomeEmIngles(c.idiomaTraducao) +
+            ". The text may be in any language. Return only the translation, with no quotes, notes or comments."
 }
